@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Geocoding.Providers/Google/GoogleSettings.Designer.cs
+/Geocoding.Providers/Google/GoogleSettings.settings

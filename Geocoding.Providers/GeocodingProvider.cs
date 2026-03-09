@@ -24,7 +24,7 @@ public class GeocodingProvider : ProviderBase
                         _provider = AppDomain.CurrentDomain.GetAssemblies()
                             .SelectMany(assembly => assembly.GetTypes())
                             .Where(type =>
-                                typeof(GeocodingProvider).IsAssignableFrom(type) &&
+                                typeof(GeocodeProvider).IsAssignableFrom(type) &&
                                 !type.IsAbstract && type.IsClass
                             )
                             .Select(type => Activator.CreateInstance(type) as GeocodeProvider)
