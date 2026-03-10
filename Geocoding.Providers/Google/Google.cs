@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Web;
@@ -53,6 +54,11 @@ public class Google : GeocodeProvider
             location.County,
             location.Country
         };
+
+        // Remove empty or null values
+        address = address.Where(str =>
+            string.IsNullOrWhiteSpace(str) == false
+        ).ToList();
 
         sb.AppendFormat(
             "&{0}={1}",
