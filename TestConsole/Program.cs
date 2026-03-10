@@ -11,9 +11,6 @@ internal class Program
     static async Task Main(string[] args)
     {
         await TestGeocode();
-
-        Console.WriteLine("\n\npress any key to continue...");
-        Console.ReadKey();
     }
 
     static async Task TestGeocode()
@@ -22,14 +19,19 @@ internal class Program
         GeocodingProvider provider = new();
         LocationInfo location = new();
 
-        Console.WriteLine("Geocode Type?");
         var types = Enum.GetValues<GeocodeType>();
         var locationProps = location.GetType().GetProperties();
 
-        for (int i = 0; i < types.Length; i++)
+        for (var i = 0; i < types.Length; i++)
         {
-            Console.WriteLine(string.Format("{0}. {1}", i + 1, types[i]));
+            Console.WriteLine(
+                string.Format("{0}. {1}", i + 1, types[i])
+            );
         }
+
+        Console.Write(
+            string.Format("Geocode Type ({0}-{1}) ? ", 1, types.Length)
+        );
 
         if (
             int.TryParse(Console.ReadLine(), out int type) &&
@@ -42,6 +44,8 @@ internal class Program
         {
             throw new Exception("Invalid Geocode Type!");
         }
+
+        Console.WriteLine();
 
         List<string> forwardProps = [
             "Address",
@@ -83,7 +87,7 @@ internal class Program
                 continue;
             }
 
-            Console.Write(string.Format("{0}: ", prop.Name));
+            Console.Write(string.Format("{0} ? ", prop.Name));
             string? value = Console.ReadLine();
 
             if (value != null)
@@ -110,6 +114,6 @@ internal class Program
 
         string output = JsonSerializer.Serialize(result, options);
 
-        Console.WriteLine(output);
+        Console.WriteLine(string.Format("\nResponse:\n{0}", output));
     }
 }
