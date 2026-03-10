@@ -28,12 +28,12 @@ public class GeocodingProvider : ProviderBase
                                 !type.IsAbstract && type.IsClass
                             )
                             .Select(type => Activator.CreateInstance(type) as GeocodeProvider)
-                            .First(provider => provider != null && provider.Enabled);
+                            .FirstOrDefault(provider => provider != null && provider.Enabled);
                     }
                 }
             }
 
-            return _provider!;
+            return _provider ?? throw new Exception("No Provider Found");
         }
     }
 
@@ -43,7 +43,8 @@ public class GeocodingProvider : ProviderBase
     {
         List<LocationInfo> results = await Provider.PerformGeocode(
             GeocodeType.Forward,
-            location
+            location,
+            Provider.RequestTimeout
         );
 
         return new LocationResult(
@@ -56,7 +57,8 @@ public class GeocodingProvider : ProviderBase
     {
         List<LocationInfo> results = await Provider.PerformGeocode(
             GeocodeType.Reverse,
-            location
+            location,
+            Provider.RequestTimeout
         );
 
         return new LocationResult(

@@ -83,10 +83,10 @@ public class AddressComponent
 public class Location
 {
     [JsonPropertyName("lat")]
-    public double Latitude { get; set; }
+    public double? Latitude { get; set; }
 
     [JsonPropertyName("lng")]
-    public double Longitude { get; set; }
+    public double? Longitude { get; set; }
 }
 
 public class Viewport

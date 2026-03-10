@@ -29,13 +29,18 @@ public abstract class GeocodeProvider
 
     public async Task<List<LocationInfo>> PerformGeocode(
         GeocodeType geocodeType,
-        LocationInfo location
+        LocationInfo location,
+        int requestTimeout
     )
     {
         List<LocationInfo> results = new();
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-        HttpClient client = new();
+        HttpClient client = new()
+        {
+            Timeout = TimeSpan.FromMilliseconds(requestTimeout)
+        };
+
         Uri requestUri = geocodeType == GeocodeType.Forward
             ? ForwardGeocode(location)
             : ReverseGeocode(location);
