@@ -363,5 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Google geocoding settings
-/Geocoding.Providers/Google/GoogleSettings.Designer.cs
-/Geocoding.Providers/Google/GoogleSettings.settings
+*GoogleSettings.cs

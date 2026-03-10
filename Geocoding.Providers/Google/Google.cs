@@ -20,28 +20,28 @@ public class Google : GeocodeProvider
 
     public Google() { }
 
-    public override string Name => "Google";
+    public override string Name => GoogleSettings.Name;
 
-    public override bool Enabled => GoogleSettings.Default.Enabled;
+    public override bool Enabled => GoogleSettings.Enabled;
 
-    public override int RequestTimeout => GoogleSettings.Default.RequestTimeout;
+    public override int RequestTimeout => GoogleSettings.RequestTimeout;
 
     public override Uri ForwardGeocode(LocationInfo location)
     {
         StringBuilder sb = new();
 
-        sb.Append(GoogleSettings.Default.ForwardGeocodeUrl);
+        sb.Append(GoogleSettings.ForwardGeocodeUrl);
 
         sb.AppendFormat(
             "?{0}={1}",
             KEY,
-            GoogleSettings.Default.ApiKey
+            GoogleSettings.ApiKey
         );
 
         sb.AppendFormat(
             "&{0}={1}",
             SENSOR,
-            GoogleSettings.Default.SensorEnabled
+            GoogleSettings.SensorEnabled
         );
 
         List<string?> address = new()
@@ -67,18 +67,18 @@ public class Google : GeocodeProvider
     {
         StringBuilder sb = new();
 
-        sb.Append(GoogleSettings.Default.ReverseGeocodeUrl);
+        sb.Append(GoogleSettings.ReverseGeocodeUrl);
 
         sb.AppendFormat(
             "?{0}={1}",
             KEY,
-            GoogleSettings.Default.ApiKey
+            GoogleSettings.ApiKey
         );
 
         sb.AppendFormat(
             "&{0}={1}",
             SENSOR,
-            GoogleSettings.Default.SensorEnabled
+            GoogleSettings.SensorEnabled
         );
 
         sb.AppendFormat(
