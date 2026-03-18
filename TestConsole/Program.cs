@@ -34,8 +34,8 @@ internal class Program
         );
 
         if (
-            int.TryParse(Console.ReadLine(), out int type) &&
-            (type - 1) < types.Length
+            int.TryParse(Console.ReadLine(), out int type)
+            && (type - 1) < types.Length
         )
         {
             geocodeType = types[type - 1];
@@ -63,42 +63,27 @@ internal class Program
 
         foreach (var prop in locationProps)
         {
-            if (
-                forwardProps.Contains(prop.Name) == false &&
-                reverseProps.Contains(prop.Name) == false
-            )
-            {
-                continue;
-            }
+            bool isForward = geocodeType == GeocodeType.Forward
+                && forwardProps.Contains(prop.Name);
 
-            if (
-                geocodeType == GeocodeType.Forward &&
-                forwardProps.Contains(prop.Name) == false
-            )
-            {
-                continue;
-            }
+            bool isReverse = geocodeType == GeocodeType.Reverse
+                && reverseProps.Contains(prop.Name);
 
-            if (
-                geocodeType == GeocodeType.Reverse &&
-                reverseProps.Contains(prop.Name) == false
-            )
+            if (isForward || isReverse)
             {
-                continue;
-            }
+                Console.Write(string.Format("{0} ? ", prop.Name));
+                string? value = Console.ReadLine();
 
-            Console.Write(string.Format("{0} ? ", prop.Name));
-            string? value = Console.ReadLine();
-
-            if (value != null)
-            {
-                if (prop.PropertyType == typeof(string))
+                if (value != null)
                 {
-                    prop.SetValue(location, value);
-                }
-                else if (prop.PropertyType == typeof(double?))
-                {
-                    prop.SetValue(location, Convert.ToDouble(value));
+                    if (prop.PropertyType == typeof(string))
+                    {
+                        prop.SetValue(location, value);
+                    }
+                    else if (prop.PropertyType == typeof(double?))
+                    {
+                        prop.SetValue(location, Convert.ToDouble(value));
+                    }
                 }
             }
         }
